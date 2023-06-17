@@ -1879,6 +1879,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 0
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &2083739113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1891,6 +1901,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59eeb32d75bf63643a8266b61c833205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: []
+  roomName: {fileID: 0}
+  roomSettingPanel: {fileID: 0}
+  waitingPanel: {fileID: 0}
+  startButton: {fileID: 0}
+  maxNumberOfPlayers: 2
+  minNumberOfPlayers: 1
+  sceneMP: 
 --- !u!4 &2083739114
 Transform:
   m_ObjectHideFlags: 0
