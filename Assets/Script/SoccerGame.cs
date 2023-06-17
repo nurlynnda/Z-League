@@ -42,12 +42,12 @@ public class SoccerGame : MonoBehaviour
 
         // Game Time
         float gameTimer = 0f;
-        while (gameTimer <= gameTimeDuration)
+        while (gameTimeDuration > 0)
         {
             if (isGameStarted)
             {
-                timerText.text = FormatTime(gameTimer);
-                gameTimer++;
+                timerText.text = FormatTime(gameTimeDuration);
+                gameTimeDuration--;
             }
             yield return new WaitForSeconds(1f);
         }
@@ -71,7 +71,7 @@ public class SoccerGame : MonoBehaviour
 
     public void saveScore()
     {
-        FindObjectOfType<APISystem>().InsertPlayerActivity(PlayerPrefs.GetString("username"), "goal_score", "add", scoreGame); //this is how we send score to Tenenet
+        FindObjectOfType<APISystem>().InsertPlayerActivity(PlayerPrefs.GetString("username"), "score001", "add", scoreGame); //this is how we send score to Tenenet
     }
 
     private void Update()

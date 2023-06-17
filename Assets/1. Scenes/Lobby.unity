@@ -1885,7 +1885,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 0}
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1902,13 +1903,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: []
-  roomName: {fileID: 0}
-  roomSettingPanel: {fileID: 0}
-  waitingPanel: {fileID: 0}
-  startButton: {fileID: 0}
+  roomName: {fileID: 2027582735}
+  roomSettingPanel: {fileID: 1156233401}
+  waitingPanel: {fileID: 1997437294}
+  startButton: {fileID: 1907928435}
   maxNumberOfPlayers: 2
   minNumberOfPlayers: 1
-  sceneMP: 
+  sceneMP: GameMP
 --- !u!4 &2083739114
 Transform:
   m_ObjectHideFlags: 0
