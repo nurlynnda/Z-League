@@ -6,11 +6,15 @@ using UnityEngine;
 public class CarController : MonoBehaviour
 {
     private float horizontalInput, verticalInput;
-    private float currentSteerAngle, currentbreakForce;
+    private float currentSteerAngle, currentBreakForce;
     private bool isBreaking;
 
     // Settings
     [SerializeField] private float motorForce, breakForce, maxSteerAngle;
+    [SerializeField] private float floatingForce = 2f;
+    [SerializeField] private float boostForce = 2f;
+    [SerializeField] private KeyCode floatKey = KeyCode.F;
+    [SerializeField] private KeyCode boostKey = KeyCode.B;
 
     // Wheel Colliders
     [SerializeField] private WheelCollider frontLeftWheelCollider, frontRightWheelCollider;
@@ -19,6 +23,9 @@ public class CarController : MonoBehaviour
     // Wheels
     [SerializeField] private Transform frontLeftWheelTransform, frontRightWheelTransform;
     [SerializeField] private Transform rearLeftWheelTransform, rearRightWheelTransform;
+
+    private bool isFloating;
+    private bool isBoosting;
 
     private void FixedUpdate()
     {
@@ -38,22 +45,57 @@ public class CarController : MonoBehaviour
 
         // Breaking Input
         isBreaking = Input.GetKey(KeyCode.Space);
+
+        // Floating Input
+        isFloating = Input.GetKey(floatKey);
+
+        // Boost Input
+        isBoosting = Input.GetKey(boostKey);
     }
 
     private void HandleMotor()
     {
-        frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
-        frontRightWheelCollider.motorTorque = verticalInput * motorForce;
-        currentbreakForce = isBreaking ? breakForce : 0f;
-        ApplyBreaking();
+        if (isFloating)
+        {
+            ApplyFloating();
+        }
+        else
+        {
+            frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
+            frontRightWheelCollider.motorTorque = verticalInput * motorForce;
+            currentBreakForce = isBreaking ? breakForce : 0f;
+            ApplyBreaking();
+        }
+
+        if (isBoosting)
+        {
+            ApplyBoost();
+        }
     }
 
     private void ApplyBreaking()
     {
-        frontRightWheelCollider.brakeTorque = currentbreakForce;
-        frontLeftWheelCollider.brakeTorque = currentbreakForce;
-        rearLeftWheelCollider.brakeTorque = currentbreakForce;
-        rearRightWheelCollider.brakeTorque = currentbreakForce;
+        frontRightWheelCollider.brakeTorque = currentBreakForce;
+        frontLeftWheelCollider.brakeTorque = currentBreakForce;
+        rearLeftWheelCollider.brakeTorque = currentBreakForce;
+        rearRightWheelCollider.brakeTorque = currentBreakForce;
+    }
+
+    private void ApplyFloating()
+    {
+        Vector3 floatingForceVector = Vector3.up * floatingForce;
+        frontLeftWheelCollider.attachedRigidbody.AddForce(floatingForceVector);
+        frontRightWheelCollider.attachedRigidbody.AddForce(floatingForceVector);
+        rearLeftWheelCollider.attachedRigidbody.AddForce(floatingForceVector);
+        rearRightWheelCollider.attachedRigidbody.AddForce(floatingForceVector);
+    }
+
+    private void ApplyBoost()
+    {
+        frontLeftWheelCollider.attachedRigidbody.AddForce(transform.forward * boostForce);
+        frontRightWheelCollider.attachedRigidbody.AddForce(transform.forward * boostForce);
+        rearLeftWheelCollider.attachedRigidbody.AddForce(transform.forward * boostForce);
+        rearRightWheelCollider.attachedRigidbody.AddForce(transform.forward * boostForce);
     }
 
     private void HandleSteering()
