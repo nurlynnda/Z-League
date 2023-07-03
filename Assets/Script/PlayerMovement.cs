@@ -5,8 +5,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private CharacterController _controller;
-    private Vector3 _playerVelocity;
-    private bool _groundedPlayer;
 
     [SerializeField]
     private float _playerSpeed = 5f;
@@ -15,15 +13,20 @@ public class PlayerMovement : MonoBehaviour
     private float _rotationSpeed = 10f;
 
     [SerializeField]
+    private float _jumpForce = 5f;
+
+    [SerializeField]
+    private float _floatForce = 2f;
+
+    [SerializeField]
     private Camera _followCamera;
 
-    [SerializeField]
-    private float _jumpHeight = 1f;
+    private Vector3 _playerVelocity;
+    private bool _groundedPlayer;
+    private bool _isBoosting;
 
     [SerializeField]
-    private float _boostMultiplier = 2f;
-
-    private float _gravityValue = -20f;
+    private float _gravityValue = -9.81f;
 
     private void Start()
     {
@@ -33,24 +36,9 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         Movement();
-
-        if (Input.GetButtonDown("Jump") && _groundedPlayer)
-        {
-            Jump();
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            Boost();
-        }
-
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            EndBoost();
-        }
     }
 
-    private void Movement()
+    void Movement()
     {
         _groundedPlayer = _controller.isGrounded;
         if (_groundedPlayer && _playerVelocity.y < 0)
@@ -61,16 +49,20 @@ public class PlayerMovement : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
+        bool jumpInput = Input.GetKeyDown(KeyCode.Z);
+        bool boostInput = Input.GetKeyDown(KeyCode.LeftShift);
+
         Vector3 movementInput = Quaternion.Euler(0, _followCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
         Vector3 movementDirection = movementInput.normalized;
 
-        float currentSpeed = _playerSpeed;
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (!_isBoosting)
         {
-            currentSpeed *= _boostMultiplier;
+            _controller.Move(movementDirection * _playerSpeed * Time.deltaTime);
         }
-
-        _controller.Move(movementDirection * currentSpeed * Time.deltaTime);
+        else
+        {
+            _controller.Move(movementDirection * _playerSpeed * 2f * Time.deltaTime);
+        }
 
         if (movementDirection != Vector3.zero)
         {
@@ -78,22 +70,26 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _rotationSpeed * Time.deltaTime);
         }
 
+        if (jumpInput && _groundedPlayer)
+        {
+            _playerVelocity.y += Mathf.Sqrt(_jumpForce * -3.0f * _gravityValue);
+        }
+
+        if (boostInput && !_isBoosting)
+        {
+            StartCoroutine(Boost());
+        }
+
         _playerVelocity.y += _gravityValue * Time.deltaTime;
         _controller.Move(_playerVelocity * Time.deltaTime);
     }
 
-    private void Jump()
+    IEnumerator Boost()
     {
-        _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -2f * _gravityValue);
-    }
-
-    private void Boost()
-    {
-        _playerSpeed *= _boostMultiplier;
-    }
-
-    private void EndBoost()
-    {
-        _playerSpeed /= _boostMultiplier;
+        _isBoosting = true;
+        _playerSpeed *= 2f;
+        yield return new WaitForSeconds(3f);
+        _playerSpeed /= 2f;
+        _isBoosting = false;
     }
 }

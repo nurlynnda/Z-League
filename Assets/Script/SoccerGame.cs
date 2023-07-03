@@ -41,7 +41,6 @@ public class SoccerGame : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Game Time
-        float gameTimer = 0f;
         while (gameTimeDuration > 0)
         {
             if (isGameStarted)
@@ -109,13 +108,13 @@ public class SoccerGame : MonoBehaviour
     [PunRPC]
     private void managePlayer(bool status)
     {
-        FindObjectOfType<PlayerMovement>().enabled = status;
-        FindObjectOfType<PlayerBall>().enabled = status;
+        FindObjectOfType<CarController>().enabled = status;
+        //FindObjectOfType<PlayerBall>().enabled = status;
     }
 
     [PunRPC]
     private void managePlayerMP(bool status)
     {
-        FindObjectOfType<PlayerMovementMP>().enabled = status;
+        FindObjectOfType<CarControllerMP>().enabled = status;
     }
 }

@@ -6,13 +6,14 @@ using TMPro;
 
 public class LobbyManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
 {
-    public TextMeshProUGUI[] playerName;
+    public TMP_Text[] playerName;
 
     public TMP_InputField roomName;
     //public Text roomName;
 
     public GameObject roomSettingPanel;
     public GameObject waitingPanel;
+    public GameObject teamSelectionPanel;
 
     public Button startButton;
 
@@ -21,6 +22,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public int minNumberOfPlayers = 1;
 
     public string sceneMP;
+
+    private int playerTeamIndex = -1;
 
     void Start()
     {
@@ -52,7 +55,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
         if (!string.IsNullOrEmpty(roomName.text))
         {
             roomSettingPanel.SetActive(false);
-            waitingPanel.SetActive(true);
+            teamSelectionPanel.SetActive(true);
 
             string namePlayer = PlayerPrefs.GetString("username");
             PhotonNetwork.NickName = namePlayer;
@@ -60,8 +63,41 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
         }
     }
 
+    public void SelectTeamA()
+    {
+        playerTeamIndex = 0;
+        PlayerPrefs.SetInt("PlayerTeamIndex", 0);
+        StartGame();
+    }
+
+    public void SelectTeamB()
+    {
+        playerTeamIndex = 1;
+        PlayerPrefs.SetInt("PlayerTeamIndex", 1);
+        StartGame();
+    }
+
+    private void StartGame()
+    {
+        teamSelectionPanel.SetActive(false);
+        waitingPanel.SetActive(true);
+
+        if (playerTeamIndex == 0)
+        {
+            playerName[0].text = PhotonNetwork.NickName;
+            photonView.RPC("Send_PlayerName", RpcTarget.OthersBuffered, 0, PhotonNetwork.NickName);
+        }
+        else if (playerTeamIndex == 1)
+        {
+            playerName[1].text = PhotonNetwork.NickName;
+            photonView.RPC("Send_PlayerName", RpcTarget.OthersBuffered, 1, PhotonNetwork.NickName);
+        }
+    }
+
     public void LoadScene()
     {
+        PlayerPrefs.SetString("PlayerName1", playerName[0].text);
+        PlayerPrefs.SetString("PlayerName2", playerName[1].text);
         PhotonNetwork.LoadLevel(sceneMP);
     }
 
@@ -69,16 +105,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
         base.OnJoinedRoom();
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            playerName[0].text = PhotonNetwork.NickName;
-            photonView.RPC("Send_PlayersName", RpcTarget.OthersBuffered, 0, PhotonNetwork.NickName);
-        }
-        else
-        {
-            playerName[1].text = PhotonNetwork.NickName;
-            photonView.RPC("Send_PlayersName", RpcTarget.OthersBuffered, 1, PhotonNetwork.NickName);
-        }
+        roomSettingPanel.SetActive(false);
+        teamSelectionPanel.SetActive(true);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -97,7 +125,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
     }
 
     [PunRPC]
-    void Send_PlayersName(int index,string name)
+    void Send_PlayerName(int index, string name)
     {
         playerName[index].text = name;
     }

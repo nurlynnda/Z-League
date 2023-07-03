@@ -7,31 +7,27 @@ using TMPro;
 
 public class SpawnPlayer : MonoBehaviourPunCallbacks
 {
-    public string[] playerName;
+    public TMP_Text[] playerName;
     public GameObject player;
     public Vector3[] playerPos;
 
     // Start is called before the first frame update
     void Start()
     {
+        int playerTeamIndex = PlayerPrefs.GetInt("PlayerTeamIndex");
+
         if (PhotonNetwork.IsMasterClient)
         {
-            playerName[0] = PhotonNetwork.NickName;
-            photonView.RPC("Set_OtherPlayerName", RpcTarget.OthersBuffered, 0, PhotonNetwork.NickName);
-            PhotonNetwork.Instantiate(player.name, playerPos[0], Quaternion.identity);
-            //Transform canvas = player.transform.Find("Canvas");
-            //Transform showName = canvas.Find("Name");
-            //showName.GetComponent<TextMeshProUGUI>().text = playerName[0];
+            playerName[playerTeamIndex].text = PhotonNetwork.NickName;
+            photonView.RPC("Set_OtherPlayerName", RpcTarget.OthersBuffered, playerTeamIndex, PhotonNetwork.NickName);
+            PhotonNetwork.Instantiate(player.name, playerPos[playerTeamIndex], Quaternion.identity);
         }
         else
         {
-            playerName[1]= PhotonNetwork.NickName;
-            photonView.RPC("Set_OtherPlayerName", RpcTarget.OthersBuffered, 1, PhotonNetwork.NickName);
+            playerName[playerTeamIndex].text = PhotonNetwork.NickName;
+            photonView.RPC("Set_OtherPlayerName", RpcTarget.OthersBuffered, playerTeamIndex, PhotonNetwork.NickName);
             Quaternion rotationB = Quaternion.Euler(0f, 180f, 0f);
-            PhotonNetwork.Instantiate(player.name, playerPos[1], rotationB);
-            //Transform canvas = player.transform.Find("Canvas");
-            //Transform showName = canvas.Find("Name");
-            //showName.GetComponent<TextMeshProUGUI>().text = playerName[1];
+            PhotonNetwork.Instantiate(player.name, playerPos[playerTeamIndex], rotationB);
         }
     }
 
@@ -44,6 +40,6 @@ public class SpawnPlayer : MonoBehaviourPunCallbacks
     [PunRPC]
     void Set_OtherPlayerName(int index, string name)
     {
-        playerName[index] = name;
+        playerName[index].text = name;
     }
 }

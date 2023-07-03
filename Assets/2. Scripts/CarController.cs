@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class CarController : MonoBehaviour
 {
@@ -26,6 +27,13 @@ public class CarController : MonoBehaviour
 
     private bool isFloating;
     private bool isBoosting;
+
+    private Rigidbody carRigidbody;
+
+    private void Awake()
+    {
+        carRigidbody = GetComponent<Rigidbody>();
+    }
 
     private void FixedUpdate()
     {
@@ -84,10 +92,7 @@ public class CarController : MonoBehaviour
     private void ApplyFloating()
     {
         Vector3 floatingForceVector = Vector3.up * floatingForce;
-        frontLeftWheelCollider.attachedRigidbody.AddForce(floatingForceVector);
-        frontRightWheelCollider.attachedRigidbody.AddForce(floatingForceVector);
-        rearLeftWheelCollider.attachedRigidbody.AddForce(floatingForceVector);
-        rearRightWheelCollider.attachedRigidbody.AddForce(floatingForceVector);
+        carRigidbody.AddForce(floatingForceVector, ForceMode.Force);
     }
 
     private void ApplyBoost()
