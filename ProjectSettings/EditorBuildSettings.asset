@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/1. Scenes/Start.unity
     guid: 28b5a3d1ffad05b4398758ef931867d1
   - enabled: 1
-    path: Assets/1. Scenes/Main.unity
+    path: Assets/1. Scenes/Login.unity
     guid: cc5ffb3b5720b904f8a3bba20a854517
   - enabled: 1
     path: Assets/1. Scenes/Menu.unity
@@ -24,10 +24,13 @@ EditorBuildSettings:
     path: Assets/1. Scenes/Leaderboard.unity
     guid: fd95ee3ee0a740841ba3bfaeba3e890c
   - enabled: 1
+    path: Assets/1. Scenes/LevelSelection.unity
+    guid: 4a01b8bdf68c82742aa857ca5dc4179a
+  - enabled: 1
     path: Assets/1. Scenes/Level2.unity
     guid: 32a241fceaf38384d8d5c869d458f227
   - enabled: 1
-    path: Assets/1. Scenes/Level.unity
+    path: Assets/1. Scenes/Level1.unity
     guid: b9fda37f143c61e49aec57b7d3c73626
   - enabled: 1
     path: Assets/1. Scenes/Level3.unity
@@ -35,7 +38,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/1. Scenes/Game_MPTest.unity
     guid: 33d97259ff735b14981e2c6e08b72882
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   m_configObjects: {}

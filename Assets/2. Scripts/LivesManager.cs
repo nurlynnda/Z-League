@@ -10,6 +10,7 @@ public class LivesManager : MonoBehaviour
     public int startingLives = 3; // Starting number of lives
     public TextMeshProUGUI livesText; // Text canvas to display remaining lives
     public GameObject winningCanvas;
+    public GameObject gameCanvas;
     private int currentLives; // Current number of lives
 
     private void Start()
@@ -56,5 +57,6 @@ public class LivesManager : MonoBehaviour
     private void GameOver()
     {
         winningCanvas.SetActive(true);
+        gameCanvas.SetActive(false);
     }
 }
