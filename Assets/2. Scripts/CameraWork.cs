@@ -37,7 +37,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         [Tooltip("The Smoothing for the camera to follow the target")]
         [SerializeField]
-        private float smoothSpeed = 0.125f;
+        private float smoothSpeed = 75f;
 
         // cached transform of the target
         Transform cameraTransform;
@@ -106,14 +106,22 @@ namespace Photon.Pun.Demo.PunBasics
         /// </summary>
         void Follow()
         {
-            cameraOffset.z = -distance;
-            cameraOffset.y = height;
+            Vector3 back = -this.transform.forward;
+            back.y = height; 
 
-            cameraTransform.position = Vector3.Lerp(cameraTransform.position, this.transform.position + this.transform.TransformVector(cameraOffset), smoothSpeed * Time.deltaTime);
+            Vector3 _targetPos = this.transform.position +
+                             this.transform.forward * centerOffset.z +
+                             this.transform.right * centerOffset.x +
+                             this.transform.up * centerOffset.y;
 
-            cameraTransform.LookAt(this.transform.position + centerOffset);
+            cameraTransform.position = Vector3.Lerp(cameraTransform.position, _targetPos, smoothSpeed * Time.deltaTime);
+
+            Vector3 _lookDirection = this.transform.position - back - cameraTransform.position;
+            Quaternion _rot = Quaternion.LookRotation(_lookDirection, Vector3.up);
+            cameraTransform.rotation = Quaternion.Lerp(cameraTransform.rotation, _rot, smoothSpeed * Time.deltaTime);
+
+            //cameraTransform.LookAt(this.transform.position + centerOffset);
         }
-
 
         void Cut()
         {

@@ -130,8 +130,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9953566, y: 1.1266286, z: 4.9742246}
-  m_Center: {x: -0.100059554, y: 0.8633774, z: -0.011051433}
+  m_Size: {x: 2.1680913, y: 1.1950094, z: 4.9742246}
+  m_Center: {x: -0.013692321, y: 0.82918704, z: -0.011051433}
 --- !u!114 &1097828845714308333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,10 +201,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 7
-  height: 3
-  centerOffset: {x: -0.06, y: 2.5, z: -3.67}
+  height: -1.33
+  centerOffset: {x: -0.06, y: 1.3, z: -5.02}
   followOnStart: 0
-  smoothSpeed: 3
+  smoothSpeed: 75
 --- !u!114 &1619853326362058254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,7 +223,7 @@ MonoBehaviour:
   floatingForce: 12000
   boostForce: 6000
   floatKey: 102
-  boostKey: 98
+  boostKey: 304
   frontLeftWheelCollider: {fileID: 70369378367156809}
   frontRightWheelCollider: {fileID: 7477785597484638382}
   rearLeftWheelCollider: {fileID: 1076072403067062075}
@@ -305,7 +305,6 @@ GameObject:
   - component: {fileID: 4442984889089120054}
   - component: {fileID: 6089241199430120174}
   - component: {fileID: 2869150931255929386}
-  - component: {fileID: 3121792659320755634}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -379,19 +378,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3121792659320755634
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 913223348782184804}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.85, y: 0.93, z: 4.34}
-  m_Center: {x: 0, y: 0.85, z: -0.018977284}
 --- !u!1 &1419504364770227181
 GameObject:
   m_ObjectHideFlags: 0

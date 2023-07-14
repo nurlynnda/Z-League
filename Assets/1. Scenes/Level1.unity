@@ -966,7 +966,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6623238749520526800, guid: e6e789cd4a0dcc048944c6fb58b07749, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: LevelSelection
+      value: Menu
       objectReference: {fileID: 0}
     - target: {fileID: 6623238749520526801, guid: e6e789cd4a0dcc048944c6fb58b07749, type: 3}
       propertyPath: m_Color.a
