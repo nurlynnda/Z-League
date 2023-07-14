@@ -47,13 +47,12 @@ public class SoccerGame : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Game Time
-        float gameTimer = 0f;
-        while (gameTimer <= gameTimeDuration)
+        while (gameTimeDuration > 0)
         {
             if (isGameStarted)
             {
-                timerText.text = FormatTime(gameTimer);
-                gameTimer++;
+                timerText.text = FormatTime(gameTimeDuration);
+                gameTimeDuration--;
             }
             yield return new WaitForSeconds(1f);
         }
@@ -79,51 +78,51 @@ public class SoccerGame : MonoBehaviour
 
     public void saveScore()
     {
-        FindObjectOfType<APISystem>().InsertPlayerActivity(PlayerPrefs.GetString("username"), "score001", "add", scoreGame); //this is how we send score to Tenenet
+        FindObjectOfType<APISystem>().InsertPlayerActivity(PlayerPrefs.GetString("username"), "score-zl", "add", scoreGame); //this is how we send score to Tenenet
     }
 
-    private void Update()
-    {
-        if (view.IsMine)
-        {
-            // Check if the game has started
-            if (SceneManager.GetActiveScene().name == sceneMP)
-            {
-                if (!isGameStarted)
-                {
-                    managePlayerMP(false);
-                }
-                else
-                {
-                    managePlayerMP(true);
-                }
-            }
-            else
-            {
-                if (!isGameStarted)
-                {
-                    managePlayer(false);
-                }
-                else
-                {
-                    managePlayer(true);
-                }
-            }
-        }
+    //private void Update()
+    //{
+    //    if (view.IsMine)
+    //    {
+    //        // Check if the game has started
+    //        if (SceneManager.GetActiveScene().name == sceneMP)
+    //        {
+    //            if (!isGameStarted)
+    //            {
+    //                managePlayerMP(false);
+    //            }
+    //            else
+    //            {
+    //                managePlayerMP(true);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            if (!isGameStarted)
+    //            {
+    //                managePlayer(false);
+    //            }
+    //            else
+    //            {
+    //                managePlayer(true);
+    //            }
+    //        }
+    //    }
         
         
-    }
+    //}
 
-    [PunRPC]
-    private void managePlayer(bool status)
-    {
-        FindObjectOfType<CarController>().enabled = status;
-        //FindObjectOfType<PlayerBall>().enabled = status;
-    }
+    //[PunRPC]
+    //private void managePlayer(bool status)
+    //{
+    //    FindObjectOfType<CarController>().enabled = status;
+    //    //FindObjectOfType<PlayerBall>().enabled = status;
+    //}
 
-    [PunRPC]
-    private void managePlayerMP(bool status)
-    {
-        FindObjectOfType<CarControllerMP>().enabled = status;
-    }
+    //[PunRPC]
+    //private void managePlayerMP(bool status)
+    //{
+    //    FindObjectOfType<PlayerMovementMP>().enabled = status;
+    //}
 }

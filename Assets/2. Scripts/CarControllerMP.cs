@@ -32,7 +32,7 @@ public class CarControllerMP : MonoBehaviour
 
     private Rigidbody carRigidbody;
 
-    private void Awake()
+    private void Start()
     {
         carRigidbody = GetComponent<Rigidbody>();
         view = GetComponent<PhotonView>();

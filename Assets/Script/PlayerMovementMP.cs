@@ -2,59 +2,154 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using Photon.Pun.Demo.PunBasics;
 
 public class PlayerMovementMP : MonoBehaviour
 {
-    private CharacterController _controller;
+    private float horizontalInput, verticalInput;
+    private float currentSteerAngle, currentBreakForce;
+    private bool isBreaking;
+
+    // Settings
+    [SerializeField] private float motorForce, breakForce, maxSteerAngle;
+    [SerializeField] private float floatingForce = 2f;
+    [SerializeField] private float boostForce = 2f;
+    [SerializeField] private KeyCode floatKey = KeyCode.F;
+    [SerializeField] private KeyCode boostKey = KeyCode.B;
+
+    // Wheel Colliders
+    [SerializeField] private WheelCollider frontLeftWheelCollider, frontRightWheelCollider;
+    [SerializeField] private WheelCollider rearLeftWheelCollider, rearRightWheelCollider;
+
+    // Wheels
+    [SerializeField] private Transform frontLeftWheelTransform, frontRightWheelTransform;
+    [SerializeField] private Transform rearLeftWheelTransform, rearRightWheelTransform;
+
+    private bool isFloating;
+    private bool isBoosting;
+
     PhotonView view;
 
-    [SerializeField]
-    private float _playerSpeed = 5f;
-
-    [SerializeField]
-    private float _rotationSpeed = 10f;
-
-    private Vector3 _playerVelocity;
-    private bool _groundedPlayer;
-
-    [SerializeField]
-    private float _gravityValue = -9.81f;
+    private Rigidbody carRigidbody;
 
     private void Start()
     {
+        carRigidbody = GetComponent<Rigidbody>();
         view = GetComponent<PhotonView>();
-        _controller = GetComponent<CharacterController>();
+
+        CameraWork _cameraWork = this.gameObject.GetComponent<CameraWork>();
+
+        if (_cameraWork != null)
+        {
+            if (view.IsMine)
+            {
+                _cameraWork.OnStartFollowing();
+            }
+        }
+        else
+        {
+            Debug.LogError("<Color=Red><a>Missing</a></Color> CameraWork Component on playerPrefab.", this);
+        }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if(view.IsMine)
+        if (view.IsMine)
         {
-            _groundedPlayer = _controller.isGrounded;
-            if (_groundedPlayer && _playerVelocity.y < 0)
-            {
-                _playerVelocity.y = 0f;
-            }
-
-            float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
-
-            Vector3 movementInput = new Vector3(-verticalInput, 0, horizontalInput);
-            Vector3 movementDirection = movementInput.normalized;
-
-            _controller.Move(movementDirection * _playerSpeed * Time.deltaTime);
-
-            if (movementDirection != Vector3.zero)
-            {
-                Quaternion desiredRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-
-                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _rotationSpeed * Time.deltaTime);
-            }
-
-            _playerVelocity.y += _gravityValue * Time.deltaTime;
-            _controller.Move(_playerVelocity * Time.deltaTime);
+            Movement();
         }
-        
+    }
+
+    private void Movement()
+    {
+        GetInput();
+        HandleMotor();
+        HandleSteering();
+        UpdateWheels();
+    }
+
+    private void GetInput()
+    {
+        // Steering Input
+        horizontalInput = Input.GetAxis("Horizontal");
+
+        // Acceleration Input
+        verticalInput = Input.GetAxis("Vertical");
+
+        // Breaking Input
+        isBreaking = Input.GetKey(KeyCode.Space);
+
+        // Floating Input
+        isFloating = Input.GetKey(floatKey);
+
+        // Boost Input
+        isBoosting = Input.GetKey(boostKey);
+    }
+
+    private void HandleMotor()
+    {
+        if (isFloating)
+        {
+            ApplyFloating();
+        }
+        else
+        {
+            frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
+            frontRightWheelCollider.motorTorque = verticalInput * motorForce;
+            currentBreakForce = isBreaking ? breakForce : 0f;
+            ApplyBreaking();
+        }
+
+        if (isBoosting)
+        {
+            ApplyBoost();
+        }
+    }
+
+    private void ApplyBreaking()
+    {
+        frontRightWheelCollider.brakeTorque = currentBreakForce;
+        frontLeftWheelCollider.brakeTorque = currentBreakForce;
+        rearLeftWheelCollider.brakeTorque = currentBreakForce;
+        rearRightWheelCollider.brakeTorque = currentBreakForce;
+    }
+
+    private void ApplyFloating()
+    {
+        Vector3 floatingForceVector = Vector3.up * floatingForce;
+        carRigidbody.AddForce(floatingForceVector, ForceMode.Force);
+    }
+
+    private void ApplyBoost()
+    {
+        frontLeftWheelCollider.attachedRigidbody.AddForce(transform.forward * boostForce);
+        frontRightWheelCollider.attachedRigidbody.AddForce(transform.forward * boostForce);
+        rearLeftWheelCollider.attachedRigidbody.AddForce(transform.forward * boostForce);
+        rearRightWheelCollider.attachedRigidbody.AddForce(transform.forward * boostForce);
+    }
+
+    private void HandleSteering()
+    {
+        currentSteerAngle = maxSteerAngle * horizontalInput;
+        frontLeftWheelCollider.steerAngle = currentSteerAngle;
+        frontRightWheelCollider.steerAngle = currentSteerAngle;
+    }
+
+    private void UpdateWheels()
+    {
+        UpdateSingleWheel(frontLeftWheelCollider, frontLeftWheelTransform);
+        UpdateSingleWheel(frontRightWheelCollider, frontRightWheelTransform);
+        UpdateSingleWheel(rearRightWheelCollider, rearRightWheelTransform);
+        UpdateSingleWheel(rearLeftWheelCollider, rearLeftWheelTransform);
+    }
+
+    private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)
+    {
+        Vector3 pos;
+        Quaternion rot;
+        wheelCollider.GetWorldPose(out pos, out rot);
+        wheelTransform.rotation = rot;
+        wheelTransform.position = pos;
     }
 
 }

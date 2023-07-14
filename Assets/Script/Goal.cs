@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
 public class Goal : MonoBehaviour
 {
@@ -12,13 +13,19 @@ public class Goal : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ball"))
         {
-            score++;
-            scoreText.text = score.ToString();
+            UpdateScore();
 
             Rigidbody ballRb = other.GetComponent<Rigidbody>();
             ballRb.velocity = Vector3.zero;
             ballRb.angularVelocity = Vector3.zero;
             other.gameObject.transform.position = spawnPoint.position;
         }
+    }
+
+    [PunRPC]
+    void UpdateScore()
+    {
+        score++;
+        scoreText.text = score.ToString();
     }
 }

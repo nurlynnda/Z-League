@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -343,6 +343,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d05fddb88dd7dc145be0efed4026ed1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  api: {fileID: 85791037}
+  content: {fileID: 1535105689}
+  scrollRect: {fileID: 154421657}
+  prefab: {fileID: 5420288430406456852}
+  playerRankPos: {fileID: 1655013452}
 --- !u!114 &85791037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,6 +360,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1436fc7e65efd4da3422c8955a86cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  containerA:
+    message:
+      first_name: 
+      last_name: 
+      alias: 
+      id: 
+      created: 
+      score: []
+    status: 
+  containerB:
+    message:
+      data: []
+    status: 
 --- !u!4 &85791038
 Transform:
   m_ObjectHideFlags: 0
@@ -2086,7 +2104,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1860990111}
   m_HandleRect: {fileID: 1860990110}
   m_Direction: 0
-  m_Value: 0.0000020501257
+  m_Value: 0.0000010250628
   m_Size: 0.9247762
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2369,3 +2387,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 411a560b38b0a93469a9a743691dcf3a, type: 3}
+--- !u!1 &5420288430406456852 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1205264363590396988, guid: 411a560b38b0a93469a9a743691dcf3a, type: 3}
+  m_PrefabInstance: {fileID: 5420288430406456851}
+  m_PrefabAsset: {fileID: 0}

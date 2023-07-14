@@ -1351,7 +1351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerText: {fileID: 650176919}
   countdownDuration: 3
-  gameTimeDuration: 45
+  gameTimeDuration: 120
   goToScene: Menu
   sceneMP: Game_MP
   canvas: {fileID: 384855095}
@@ -2208,7 +2208,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752350799}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.75, y: 3.92, z: -22.659}
+  m_LocalPosition: {x: -15.75, y: 3.92, z: -19.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2882,11 +2882,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1049828815}
   m_CullTransparentMesh: 1
---- !u!1 &1106418149 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6623238750656831935, guid: e6e789cd4a0dcc048944c6fb58b07749, type: 3}
-  m_PrefabInstance: {fileID: 30627519}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1174448147
 GameObject:
   m_ObjectHideFlags: 0
@@ -3859,7 +3854,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1602197068}
   - component: {fileID: 1602197067}
-  - component: {fileID: 1602197066}
+  - component: {fileID: 1602197069}
   m_Layer: 0
   m_Name: GoalPostA
   m_TagString: Untagged
@@ -3867,19 +3862,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1602197066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602197065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb8eecaaeede75747837cb5b53223997, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  winningCanvas: {fileID: 1106418149}
 --- !u!65 &1602197067
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3910,6 +3892,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1602197069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602197065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2adf5d7b2953940ab4d4c93edd8bd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 1174448149}
+  score: 0
+  spawnPoint: {fileID: 752350800}
 --- !u!1 &1689439067
 GameObject:
   m_ObjectHideFlags: 0
@@ -3967,10 +3964,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1689439067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb8eecaaeede75747837cb5b53223997, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b2adf5d7b2953940ab4d4c93edd8bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winningCanvas: {fileID: 1106418149}
+  scoreText: {fileID: 1833981743}
+  score: 0
+  spawnPoint: {fileID: 752350800}
 --- !u!1 &1826872365
 GameObject:
   m_ObjectHideFlags: 0

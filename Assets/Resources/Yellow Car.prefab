@@ -75,8 +75,8 @@ GameObject:
   - component: {fileID: 4962247605211484785}
   - component: {fileID: 1097828845714308333}
   - component: {fileID: 7453817169624059755}
-  - component: {fileID: 6037441613018795915}
   - component: {fileID: 1366597162043144094}
+  - component: {fileID: 1619853326362058254}
   m_Layer: 0
   m_Name: Yellow Car
   m_TagString: Untagged
@@ -188,33 +188,6 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
---- !u!114 &6037441613018795915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 629634403144261725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1feb5b78fd46b044db75748b1bea4e3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  motorForce: 1000
-  breakForce: 3000
-  maxSteerAngle: 45
-  floatingForce: 12000
-  boostForce: 6000
-  floatKey: 102
-  boostKey: 304
-  frontLeftWheelCollider: {fileID: 70369378367156809}
-  frontRightWheelCollider: {fileID: 7477785597484638382}
-  rearLeftWheelCollider: {fileID: 1076072403067062075}
-  rearRightWheelCollider: {fileID: 3162713998867583004}
-  frontLeftWheelTransform: {fileID: 1288782704975112301}
-  frontRightWheelTransform: {fileID: 2909787247411826269}
-  rearLeftWheelTransform: {fileID: 6542693986489370433}
-  rearRightWheelTransform: {fileID: 2678921189717633122}
 --- !u!114 &1366597162043144094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,9 +202,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 7
   height: 3
-  centerOffset: {x: -0.06, y: 1.8, z: -3.67}
+  centerOffset: {x: -0.06, y: 2.5, z: -3.67}
   followOnStart: 0
   smoothSpeed: 3
+--- !u!114 &1619853326362058254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629634403144261725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d97d4d404f057134ca8b50f360e4956c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  motorForce: 1000
+  breakForce: 3000
+  maxSteerAngle: 45
+  floatingForce: 12000
+  boostForce: 6000
+  floatKey: 102
+  boostKey: 98
+  frontLeftWheelCollider: {fileID: 70369378367156809}
+  frontRightWheelCollider: {fileID: 7477785597484638382}
+  rearLeftWheelCollider: {fileID: 1076072403067062075}
+  rearRightWheelCollider: {fileID: 3162713998867583004}
+  frontLeftWheelTransform: {fileID: 1288782704975112301}
+  frontRightWheelTransform: {fileID: 2909787247411826269}
+  rearLeftWheelTransform: {fileID: 6542693986489370433}
+  rearRightWheelTransform: {fileID: 2678921189717633122}
 --- !u!1 &719011567051432507
 GameObject:
   m_ObjectHideFlags: 0
