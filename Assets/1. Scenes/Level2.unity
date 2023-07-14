@@ -5780,7 +5780,7 @@ MonoBehaviour:
   startingLives: 3
   livesText: {fileID: 113033269}
   winningCanvas: {fileID: 1939566354}
-  gameCanvas: {fileID: 0}
+  gameCanvas: {fileID: 1784099191}
 --- !u!4 &8644260807368630000
 Transform:
   m_ObjectHideFlags: 0
