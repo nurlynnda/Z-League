@@ -36,6 +36,9 @@ EditorBuildSettings:
     path: Assets/1. Scenes/Level3.unity
     guid: 4ead796107d58634dbaaeecca2bd4b71
   - enabled: 1
+    path: Assets/1. Scenes/Game_MP.unity
+    guid: 80d07f447cb93364eaa0ffacd3cbd749
+  - enabled: 1
     path: Assets/1. Scenes/Game_MPTest.unity
     guid: 33d97259ff735b14981e2c6e08b72882
   m_configObjects: {}

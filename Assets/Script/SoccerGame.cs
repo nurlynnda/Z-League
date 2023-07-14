@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using TMPro;
@@ -8,7 +9,7 @@ using TMPro;
 public class SoccerGame : MonoBehaviour
 {
     PhotonView view;
-    public TextMeshProUGUI timerText;
+    public TMP_Text timerText;
     public float countdownDuration = 5f;
     public float gameTimeDuration = 10f;
     public string goToScene;
@@ -17,11 +18,16 @@ public class SoccerGame : MonoBehaviour
     private string scoreGame;
     public string sceneMP;
 
+    private ConnectServer connectServer;
+
+    public GameObject canvas;
+
     private void Start()
     {
         //currentSceneName = SceneManager.GetActiveScene().name;
         view = GetComponent<PhotonView>();
         StartCoroutine(CountdownCoroutine());
+        connectServer = GetComponent<ConnectServer>();
     }
 
     private IEnumerator CountdownCoroutine()
@@ -41,24 +47,27 @@ public class SoccerGame : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Game Time
-        while (gameTimeDuration > 0)
+        float gameTimer = 0f;
+        while (gameTimer <= gameTimeDuration)
         {
             if (isGameStarted)
             {
-                timerText.text = FormatTime(gameTimeDuration);
-                gameTimeDuration--;
+                timerText.text = FormatTime(gameTimer);
+                gameTimer++;
             }
             yield return new WaitForSeconds(1f);
         }
 
         // Game Over
-        timerText.text = "Game Over";
+        canvas.SetActive(true);
+        timerText.text = "";
         isGameStarted = false;
         int goalScore = FindObjectOfType<Goal>().score;
         scoreGame = (goalScore * 10).ToString(); //this is only example calculation for score
         Debug.Log(scoreGame);
         saveScore();
         SceneManager.LoadScene(goToScene);
+        connectServer.DisconnectMultiplayer();
     }
 
     private string FormatTime(float time)

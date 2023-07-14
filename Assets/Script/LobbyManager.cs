@@ -17,6 +17,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
     public Button startButton;
 
+    public Button teamAButton;
+    public Button teamBButton;
+
+    bool selectedA = false;
+    bool selectedB = false;
+
     RoomOptions options;
     public int maxNumberOfPlayers = 2;
     public int minNumberOfPlayers = 1;
@@ -48,6 +54,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
         {
             startButton.interactable = false;
         }
+
+        if (!PhotonNetwork.IsMasterClient && selectedA == true)
+        {
+            teamAButton.interactable = false;
+        }
+
+        if (!PhotonNetwork.IsMasterClient && selectedB == true)
+        {
+            teamBButton.interactable = false;
+        }
+        
     }
 
     public void JoinRoom()
@@ -66,15 +83,31 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public void SelectTeamA()
     {
         playerTeamIndex = 0;
-        PlayerPrefs.SetInt("PlayerTeamIndex", 0);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PlayerPrefs.SetInt("MasterIndex", playerTeamIndex);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("ClientIndex", playerTeamIndex);
+        }
         StartGame();
+        selectedA = true;
     }
 
     public void SelectTeamB()
     {
         playerTeamIndex = 1;
-        PlayerPrefs.SetInt("PlayerTeamIndex", 1);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PlayerPrefs.SetInt("MasterIndex", playerTeamIndex);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("ClientIndex", playerTeamIndex);
+        }
         StartGame();
+        selectedB = true;
     }
 
     private void StartGame()

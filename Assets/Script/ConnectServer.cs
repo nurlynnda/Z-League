@@ -26,6 +26,12 @@ public class ConnectServer : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
 
+    public void DisconnectMultiplayer()
+    {
+        PhotonNetwork.Disconnect();
+        Debug.Log("Disconnected");
+    }
+
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();

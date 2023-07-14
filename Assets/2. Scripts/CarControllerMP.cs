@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 
 public class CarControllerMP : MonoBehaviour
 {
@@ -29,20 +30,42 @@ public class CarControllerMP : MonoBehaviour
 
     PhotonView view;
 
-    private void Start()
+    private Rigidbody carRigidbody;
+
+    private void Awake()
     {
+        carRigidbody = GetComponent<Rigidbody>();
         view = GetComponent<PhotonView>();
+
+        CameraWork _cameraWork = this.gameObject.GetComponent<CameraWork>();
+
+        if (_cameraWork != null)
+        {
+            if (view.IsMine)
+            {
+                _cameraWork.OnStartFollowing();
+            }
+        }
+        else
+        {
+            Debug.LogError("<Color=Red><a>Missing</a></Color> CameraWork Component on playerPrefab.", this);
+        }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (view.IsMine)
         {
-            GetInput();
-            HandleMotor();
-            HandleSteering();
-            UpdateWheels();
+            Movement();
         }
+    }
+
+    private void Movement()
+    {
+        GetInput();
+        HandleMotor();
+        HandleSteering();
+        UpdateWheels();
     }
 
     private void GetInput()
@@ -94,10 +117,7 @@ public class CarControllerMP : MonoBehaviour
     private void ApplyFloating()
     {
         Vector3 floatingForceVector = Vector3.up * floatingForce;
-        frontLeftWheelCollider.attachedRigidbody.AddForce(floatingForceVector);
-        frontRightWheelCollider.attachedRigidbody.AddForce(floatingForceVector);
-        rearLeftWheelCollider.attachedRigidbody.AddForce(floatingForceVector);
-        rearRightWheelCollider.attachedRigidbody.AddForce(floatingForceVector);
+        carRigidbody.AddForce(floatingForceVector, ForceMode.Force);
     }
 
     private void ApplyBoost()
