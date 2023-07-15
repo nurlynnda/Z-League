@@ -11,6 +11,8 @@ public class SpawnPlayer : MonoBehaviourPunCallbacks
     public GameObject[] player;
     public Vector3[] playerPos;
 
+    public GameObject[] lines;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,7 @@ public class SpawnPlayer : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             playerName[master].text = PhotonNetwork.NickName;
+            lines[master].SetActive(true);
             photonView.RPC("Set_OtherPlayerName", RpcTarget.OthersBuffered, master, PhotonNetwork.NickName);
             Quaternion rotation = Quaternion.Euler(0f, master == 1 ? 180f : 0f, 0f);
             PhotonNetwork.Instantiate(player[master].name, playerPos[master], rotation);
@@ -28,6 +31,7 @@ public class SpawnPlayer : MonoBehaviourPunCallbacks
         else
         {
             playerName[client].text = PhotonNetwork.NickName;
+            lines[client].SetActive(true);
             photonView.RPC("Set_OtherPlayerName", RpcTarget.OthersBuffered, client, PhotonNetwork.NickName);
             Quaternion rotation = Quaternion.Euler(0f, client == 1 ? 180f : 0f, 0f);
             PhotonNetwork.Instantiate(player[client].name, playerPos[client], rotation);

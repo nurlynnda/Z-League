@@ -28,6 +28,8 @@ public class CarController : MonoBehaviour
     private bool isFloating;
     private bool isBoosting;
 
+    private bool isSPActivated = false;
+
     private Rigidbody carRigidbody;
 
     private void Awake()
@@ -41,6 +43,11 @@ public class CarController : MonoBehaviour
         HandleMotor();
         HandleSteering();
         UpdateWheels();
+    }
+
+    public void SetSPActivated(bool flag)
+    {
+        isSPActivated = flag;
     }
 
     private void GetInput()
@@ -75,7 +82,7 @@ public class CarController : MonoBehaviour
             ApplyBreaking();
         }
 
-        if (isBoosting)
+        if (isSPActivated == true && isBoosting == true)
         {
             ApplyBoost();
         }

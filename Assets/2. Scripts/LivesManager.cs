@@ -6,9 +6,8 @@ using TMPro;
 
 public class LivesManager : MonoBehaviour
 {
-    public float moveSpeed = 5f; // Speed of the player's movement
     public int startingLives = 3; // Starting number of lives
-    public TextMeshProUGUI livesText; // Text canvas to display remaining lives
+    public TMP_Text livesText; // Text canvas to display remaining lives
     public GameObject winningCanvas;
     public GameObject gameCanvas;
     private int currentLives; // Current number of lives
@@ -17,15 +16,6 @@ public class LivesManager : MonoBehaviour
     {
         currentLives = startingLives; // Set the current lives to the starting lives
         UpdateLivesText(); // Update the text canvas with the initial number of lives
-    }
-
-    private void Update()
-    {
-        // Player movement logic goes here...
-
-        // Example: Move the player horizontally
-        float horizontalInput = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.right * horizontalInput * moveSpeed * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)

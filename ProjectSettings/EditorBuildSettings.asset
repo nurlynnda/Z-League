@@ -27,18 +27,15 @@ EditorBuildSettings:
     path: Assets/1. Scenes/LevelSelection.unity
     guid: 4a01b8bdf68c82742aa857ca5dc4179a
   - enabled: 1
+    path: Assets/1. Scenes/Level1.unity
+    guid: 394f80ff2635be54a82b1b99cf72ee18
+  - enabled: 1
     path: Assets/1. Scenes/Level2.unity
     guid: 32a241fceaf38384d8d5c869d458f227
-  - enabled: 1
-    path: Assets/1. Scenes/Level1.unity
-    guid: b9fda37f143c61e49aec57b7d3c73626
   - enabled: 1
     path: Assets/1. Scenes/Level3.unity
     guid: 4ead796107d58634dbaaeecca2bd4b71
   - enabled: 1
     path: Assets/1. Scenes/Game_MP.unity
     guid: 80d07f447cb93364eaa0ffacd3cbd749
-  - enabled: 1
-    path: Assets/1. Scenes/Game_MPTest.unity
-    guid: 33d97259ff735b14981e2c6e08b72882
   m_configObjects: {}
